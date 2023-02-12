@@ -10,7 +10,11 @@ const userSettingsSchema = new Schema<IUserSettings>(
       type: Boolean,
       default: false,
     },
-    isVarified: {
+    activeFlag: {
+      type: Boolean,
+      default: false,
+    },
+    isVerified: {
       type: Boolean,
       default: false,
     },
@@ -20,7 +24,8 @@ const userSettingsSchema = new Schema<IUserSettings>(
 
 interface IUserSettings {
   theme: boolean;
-  isVarified: boolean;
+  isVerified: boolean;
+  activeFlag: boolean;
   user_id: Types.ObjectId;
 }
 
