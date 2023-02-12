@@ -1,5 +1,4 @@
 import mongoose, { Schema, Types, model } from "mongoose";
-import { Type } from "typescript";
 
 const orderItemSchema = new Schema<IOrderItem>(
   {

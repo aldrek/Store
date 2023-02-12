@@ -45,7 +45,7 @@ const productItem1 = new ProductItem({
   product_id: product._id,
   category: productCategory.hats,
   color: productColor.red,
-  size: productSize.x,
+  size: productSize.s,
   image: "imageUrl",
 });
 
@@ -53,7 +53,7 @@ const productItem2 = new ProductItem({
   product_id: product._id,
   category: productCategory.hats,
   color: productColor.green,
-  size: productSize.x,
+  size: productSize.m,
   image: "imageUrl",
 });
 
@@ -61,7 +61,7 @@ const productItem3 = new ProductItem({
   product_id: product._id,
   category: productCategory.hats,
   color: productColor.green,
-  size: productSize.xx,
+  size: productSize.xxl,
   image: "imageUrl",
 });
 

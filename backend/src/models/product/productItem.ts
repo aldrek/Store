@@ -22,7 +22,7 @@ const productItemScheme = new Schema<IProductItem>({
   size: {
     type: String,
     enum: Object.values(productSize),
-    default: productSize.x,
+    default: productSize.xl,
   },
 });
 

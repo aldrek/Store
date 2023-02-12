@@ -18,8 +18,12 @@ export enum productColor {
 }
 
 export enum productSize {
-  x = "x",
-  xx = "xx",
+  s = "S",
+  m = "M",
+  l = "L",
+  xl = "XL",
+  xxl = "XXL",
+  xxxl = "XXXL",
 }
 
 export enum orderStatus {
