@@ -54,11 +54,23 @@ userSchema.method("hashPassword", async function hashPassword(password) {
   }
 });
 
+userSchema.method("checkPassword", function checkPassword(password) {
+  try {
+    const userPassword = this.password;
+
+    return bcrypt.compareSync(password, userPassword);
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
+});
+
 const User = model<IUser, UserModel>("user", userSchema);
 
 // Put all user instance methods in this interface:
 interface IUserMethods {
   hashPassword(password: String): String;
+  checkPassword(password: String): String;
 }
 
 // Create a new Model type that knows about IUserMethods...
@@ -81,6 +93,7 @@ userSchema.set("toJSON", {
     ret.id = ret._id;
     delete ret._id;
     delete ret.id;
+    delete ret.password;
     delete ret.__v;
   },
 });
