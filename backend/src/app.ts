@@ -1,6 +1,6 @@
 import express from "express";
 import { connection } from "./config/db";
-import { userRouter } from "./routers/user";
+import { userRouter } from "./routers/user.router";
 import dotenv from "dotenv";
 import { User } from "./models/user/user";
 import { UserSettings } from "./models/user/userSettings";
@@ -16,8 +16,8 @@ import { ProductItem } from "./models/product/productItem";
 import { Order } from "./models/order/order";
 
 import { OrderItem } from "./models/order/orderItem";
-import { orderRouter } from "./routers/Order";
-import { productRouter } from "./routers/products";
+import { orderRouter } from "./routers/order.router";
+import { productRouter } from "./routers/products.router";
 dotenv.config();
 
 const app = express();

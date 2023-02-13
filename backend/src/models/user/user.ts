@@ -1,7 +1,9 @@
-import mongoose, { model, Schema } from "mongoose";
+import mongoose, { Model, model, Schema } from "mongoose";
 import { userTypes } from "../types";
 import validator from "validator";
-const userSchema = new Schema<IUser>(
+import bcrypt from "bcryptjs";
+
+const userSchema = new Schema<IUser, UserModel, IUserMethods>(
   {
     email: {
       type: String,
@@ -20,6 +22,7 @@ const userSchema = new Schema<IUser>(
     password: {
       type: String,
       required: true,
+      min: [3, "Password more than three characters"],
     },
     fullname: {
       type: String,
@@ -34,10 +37,32 @@ const userSchema = new Schema<IUser>(
       enum: Object.values(userTypes),
     },
   },
-  { collection: "user", timestamps: true }
+  {
+    collection: "user",
+    timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true },
+  }
 );
 
-const User = model<IUser>("user", userSchema);
+userSchema.method("hashPassword", async function hashPassword(password) {
+  try {
+    var salt: any = await bcrypt.genSalt(10);
+    this.password = bcrypt.hashSync(password, salt);
+  } catch (e) {
+    console.log(e);
+  }
+});
+
+const User = model<IUser, UserModel>("user", userSchema);
+
+// Put all user instance methods in this interface:
+interface IUserMethods {
+  hashPassword(password: String): String;
+}
+
+// Create a new Model type that knows about IUserMethods...
+type UserModel = Model<IUser, {}, IUserMethods>;
 
 export { User };
 
@@ -49,3 +74,12 @@ interface IUser {
   image: String;
   role: String;
 }
+
+userSchema.set("toJSON", {
+  transform: (doc, ret) => {
+    ret.id = ret._id;
+    delete ret._id;
+    delete ret.id;
+    delete ret.__v;
+  },
+});

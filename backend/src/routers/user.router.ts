@@ -5,16 +5,17 @@ import {
   deleteUser,
   editUser,
   fetchAllUsers,
-  fetchUserData,
+  signinUser,
   fetchUserInfo,
-  registerUser,
   signOutUser,
+  signupUser,
 } from "../controllers/userController";
+import { checkPassword } from "../middleware/validation";
 const router = express.Router();
 
 // Auth
-router.post("/signin", fetchUserData);
-router.post("/signup", registerUser);
+router.post("/signin", signinUser);
+router.post("/signup", checkPassword, signupUser);
 router.post("/signout", signOutUser);
 
 // Edit - delete
