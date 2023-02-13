@@ -7,7 +7,7 @@
     "module": "CommonJS"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --watch",
     "start": "ts-node-dev src/app.ts"
   },
   "author": "",
@@ -29,8 +29,12 @@
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
     "@types/express": "^4.17.17",
+    "@types/jest": "^29.4.0",
     "@types/jsonwebtoken": "^9.0.1",
     "@types/mongoose": "^5.11.97",
+    "jest": "^29.4.2",
+    "supertest": "^6.3.3",
+    "ts-jest": "^29.0.5",
     "ts-node-dev": "^2.0.0"
   }
 }
