@@ -7,12 +7,12 @@ const userSettingsSchema = new Schema<IUserSettings>(
       ref: "user",
     },
     theme: {
-      type: Boolean,
-      default: false,
+      type: String,
+      default: "light",
     },
     activeFlag: {
       type: Boolean,
-      default: false,
+      default: true,
     },
     isVerified: {
       type: Boolean,
@@ -23,7 +23,7 @@ const userSettingsSchema = new Schema<IUserSettings>(
 );
 
 interface IUserSettings {
-  theme: boolean;
+  theme: String;
   isVerified: boolean;
   activeFlag: boolean;
   user_id: Types.ObjectId;

@@ -1,4 +1,4 @@
-import mongoose, { Model, model, Schema } from "mongoose";
+import mongoose, { Model, model, Schema, Types } from "mongoose";
 import { userTypes } from "../types";
 import validator from "validator";
 import bcrypt from "bcryptjs";
@@ -67,7 +67,8 @@ type UserModel = Model<IUser, {}, IUserMethods>;
 export { User };
 
 // User module
-interface IUser {
+export interface IUser {
+  _id: Types.ObjectId;
   email: String;
   password: String;
   fullname: String;

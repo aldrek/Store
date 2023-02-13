@@ -10,12 +10,13 @@ import {
   signOutUser,
   signupUser,
 } from "../controllers/userController";
+import { apiAuth } from "../middleware/apiAuth";
 import { checkPassword } from "../middleware/validation";
 const router = express.Router();
 
 // Auth
-router.post("/signin", signinUser);
-router.post("/signup", checkPassword, signupUser);
+router.post("/signin", apiAuth, signinUser);
+router.post("/signup", apiAuth, checkPassword, signupUser);
 router.post("/signout", signOutUser);
 
 // Edit - delete

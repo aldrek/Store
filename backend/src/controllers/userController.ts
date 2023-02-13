@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { User } from "../models/user/user";
-import Joi from "joi";
+import { IUser, User } from "../models/user/user";
+import { UserSettings } from "../models/user/userSettings";
 
-//
+// -------------------------------------------------------------------------------------------
 // Main goal: Signup User with email and password
 // -------------------------------------------------------------------------------------------
 export const signupUser = async (req: Request, res: Response) => {
@@ -16,6 +16,9 @@ export const signupUser = async (req: Request, res: Response) => {
       await user.hashPassword(user.password);
 
       await user.save();
+      await new UserSettings({
+        user_id: user._id,
+      }).save();
 
       if (user) {
         res.send({
@@ -31,8 +34,24 @@ export const signupUser = async (req: Request, res: Response) => {
   }
 };
 
+// -------------------------------------------------------------------------------------------
+// Main goal: Signin user with email and password
+// -------------------------------------------------------------------------------------------
 export const signinUser = async (req: Request, res: Response) => {
-  res.send("User controller");
+  const { email, password } = req.body;
+
+  var user = await User.findOne({ email: email });
+
+  if (!user?.email) {
+    return res.status(400).json({ error: "User not exist" });
+  } else {
+    const userSettings = await UserSettings.findOne({ user_id: user.email });
+    if (!userSettings || userSettings.activeFlag) {
+      res.status(400).send({ error: "Something wrong happends" });
+    } else {
+      // Check password then generate token
+    }
+  }
 };
 
 export const fetchUserInfo = async (req: Request, res: Response) => {
