@@ -3,7 +3,7 @@ import { User } from "../models/user/user";
 import Joi from "joi";
 
 //
-// Main goal: Sign up User
+// Main goal: Signup User with email and password
 // -------------------------------------------------------------------------------------------
 export const signupUser = async (req: Request, res: Response) => {
   try {
