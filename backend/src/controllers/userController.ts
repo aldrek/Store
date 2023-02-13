@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { IUser, User } from "../models/user/user";
 import { UserSettings } from "../models/user/userSettings";
 import { responseWithMessage } from "../util/responseUtil";
+import * as dotenv from "dotenv";
 
 // -------------------------------------------------------------------------------------------
 // Main goal: Signup User with email and password
@@ -53,6 +54,7 @@ export const signinUser = async (req: Request, res: Response) => {
 
         if (check) {
           // Generate token
+          await user.generateAuthToken();
           res.status(200).send({ data: user });
         } else {
           res.status(400).send({ error: "Wrong password" });
