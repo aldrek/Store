@@ -67,15 +67,35 @@ export const signinUser = async (req: Request, res: Response) => {
   }
 };
 
+// -------------------------------------------------------------------------------------------
+// Main goal: Return user information
+// -------------------------------------------------------------------------------------------
 export const fetchUserInfo = async (req: Request, res: Response) => {
+  req.user.access_token = req.token;
   res.send({
     status: "success",
     data: req.user,
   });
 };
 
+// -------------------------------------------------------------------------------------------
+// Main goal: Sign out user by deleting thier current access-token
+// -------------------------------------------------------------------------------------------
 export const signOutUser = async (req: Request, res: Response) => {
-  res.send("signOutUser");
+  try {
+    req.user.access_token = req.token;
+    let user = req.user;
+    user.logout();
+
+    res.json({
+      status: "true",
+      message: "Logout completed",
+    });
+  } catch (e) {
+    res.send({
+      status: false,
+    });
+  }
 };
 
 export const editUser = async (req: Request, res: Response) => {

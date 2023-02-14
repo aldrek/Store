@@ -78,6 +78,19 @@ userSchema.method("hashPassword", async function hashPassword(password) {
   }
 });
 
+userSchema.method("logout", async function logout() {
+  try {
+    const user = this;
+    let tokens = user.tokens.filter((token: any) => {
+      token.token != user.access_token;
+    });
+    user.tokens = tokens;
+    user.save();
+  } catch (e) {
+    console.log(e);
+  }
+});
+
 userSchema.method("generateAuthToken", async function generateAuthToken() {
   try {
     let user = this;
@@ -121,6 +134,7 @@ const User = model<IUser, UserModel>("user", userSchema);
 
 // Put all user instance methods in this interface:
 interface IUserMethods {
+  logout(): void;
   hashPassword(password: String): String;
   checkPassword(password: String): String;
   generateAuthToken(): void;

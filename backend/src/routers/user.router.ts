@@ -18,7 +18,7 @@ const router = express.Router();
 // Auth
 router.post("/signin", apiAuth, signinUser);
 router.post("/signup", apiAuth, checkPassword, signupUser);
-router.post("/signout", signOutUser);
+router.post("/signout", authMiddleware, signOutUser);
 
 // Edit - delete
 router.put("/edit", editUser);
