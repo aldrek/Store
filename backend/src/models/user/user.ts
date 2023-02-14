@@ -81,9 +81,12 @@ userSchema.method("hashPassword", async function hashPassword(password) {
 userSchema.method("logout", async function logout() {
   try {
     const user = this;
+
     let tokens = user.tokens.filter((token: any) => {
-      token.token != user.access_token;
+      return token.token !== user.access_token;
     });
+
+    console.log("asd", tokens);
     user.tokens = tokens;
     user.save();
   } catch (e) {
