@@ -5,7 +5,7 @@ import { responseWithMessage } from "../util/responseUtil";
 import * as dotenv from "dotenv";
 
 // -------------------------------------------------------------------------------------------
-// Main goal: Signup User with email and password
+// Main goal: Signup User with email and passwordh
 // -------------------------------------------------------------------------------------------
 export const signupUser = async (req: Request, res: Response) => {
   try {
@@ -68,7 +68,10 @@ export const signinUser = async (req: Request, res: Response) => {
 };
 
 export const fetchUserInfo = async (req: Request, res: Response) => {
-  res.send("fetchUserInfo");
+  res.send({
+    status: "success",
+    data: req.user,
+  });
 };
 
 export const signOutUser = async (req: Request, res: Response) => {
