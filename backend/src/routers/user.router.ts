@@ -22,7 +22,7 @@ router.post("/signout", authMiddleware, signOutUser);
 
 // Edit - delete
 router.put("/edit", editUser);
-router.put("/delete", deleteUser);
+router.delete("/delete", apiAuth, authMiddleware, deleteUser);
 
 router.put("/admin/delete", adminEditUser);
 router.put("/admin/edit", adminDeleteUser);

@@ -6,7 +6,7 @@ test("User should be able to sign up", async () => {
     .post("/api/user/signup")
     .set("api_key", process.env.API_KEY + "")
     .send({
-      email: "test3@hotmail.com",
+      email: "test7@hotmail.com",
       password: "123123123",
     })
     .expect(200);
@@ -17,7 +17,7 @@ test("User should be able to sign in by entering email and password", async () =
     .post("/api/user/signin")
     .set("api_key", process.env.API_KEY + "")
     .send({
-      email: "test2@hotmail.com",
+      email: "test7@hotmail.com",
       password: "123123123",
     })
     .expect(200);

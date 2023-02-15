@@ -1,8 +1,9 @@
-import { Request, Response } from "express";
 import { IUser, User } from "../models/user/user";
 import { UserSettings } from "../models/user/userSettings";
 import { responseWithMessage } from "../util/responseUtil";
 import * as dotenv from "dotenv";
+import { deleteType } from "../util/userUtil";
+import { Request, Response } from "express";
 
 // -------------------------------------------------------------------------------------------
 // Main goal: Signup User with email and passwordh
@@ -34,7 +35,7 @@ export const signupUser = async (req: Request, res: Response) => {
 };
 
 // -------------------------------------------------------------------------------------------
-// Main goal: Signin user with email and password
+// Main goal: Signin user using email and password
 // -------------------------------------------------------------------------------------------
 export const signinUser = async (req: Request, res: Response) => {
   try {
@@ -46,7 +47,11 @@ export const signinUser = async (req: Request, res: Response) => {
       return res.status(400).json({ error: "User not exist" });
     } else {
       const userSettings = await UserSettings.findOne({ user_id: user._id });
-      if (!userSettings || !userSettings.activeFlag) {
+      if (
+        !userSettings ||
+        !userSettings.activeFlag ||
+        userSettings.deactivatedFlag
+      ) {
         res.status(400).send({ error: "Something wrong happends" });
       } else {
         // Compare password
@@ -63,7 +68,7 @@ export const signinUser = async (req: Request, res: Response) => {
     }
   } catch (e) {
     console.log(e);
-    res.status(400).send({ error: "Something wrong happends" });
+    res.status(400).send({ error: e });
   }
 };
 
@@ -98,12 +103,17 @@ export const signOutUser = async (req: Request, res: Response) => {
   }
 };
 
-export const editUser = async (req: Request, res: Response) => {
-  res.send("editUser");
+// -------------------------------------------------------------------------------------------
+// Main goal: Delete user as soft delete
+// -------------------------------------------------------------------------------------------
+export const deleteUser = async (req: Request, res: Response) => {
+  const { type } = req.body;
+
+  UserSettings.changeUserActivationStatus(type, req, res);
 };
 
-export const deleteUser = async (req: Request, res: Response) => {
-  res.send("deleteUser");
+export const editUser = async (req: Request, res: Response) => {
+  res.send("editUser");
 };
 
 export const adminEditUser = async (req: Request, res: Response) => {
