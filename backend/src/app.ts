@@ -1,21 +1,5 @@
-import express from "express";
-import { connection } from "./config/db";
-import { userRouter } from "./routers/user";
-import dotenv from "dotenv";
-import { User } from "./models/user";
-dotenv.config();
+import { app } from "./index";
 
-const app = express();
-app.use(userRouter);
-
-connection();
-
-// Eample
-const user = new User({
-  name: "Ahmad",
-});
-user.save();
-
-app.listen(process.env.PORT || 3000, () => {
+app.listen(process.env.PORT || 8080, () => {
   console.log("Server has started");
 });
