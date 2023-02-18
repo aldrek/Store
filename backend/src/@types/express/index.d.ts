@@ -13,6 +13,8 @@ declare global {
           _id: Types.ObjectId;
         }>;
       token: string;
+      page: any;
+      size: any;
     }
   }
 }
