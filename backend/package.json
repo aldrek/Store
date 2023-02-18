@@ -8,7 +8,8 @@
   },
   "scripts": {
     "test": "jest --watch",
-    "start": "ts-node-dev src/app.ts"
+    "start": "NODE_ENV=dev ts-node-dev src/app.ts",
+    "staging": "NODE_ENV=staging ts-node-dev src/app.ts"
   },
   "author": "",
   "license": "ISC",

@@ -5,8 +5,12 @@ import { orderRouter } from "./routers/order.router";
 import { productRouter } from "./routers/products.router";
 
 import dotenv from "dotenv";
-dotenv.config();
+dotenv.config({
+  path: `./config/.env.${process.env.NODE_ENV || "dev"}`,
+});
 
+console.log("a7a:", process.env.MONGODB_URI);
+console.log("a7a:", process.env.NODE_ENV);
 const app = express();
 
 // parse requests of content-type - application/json
