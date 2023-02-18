@@ -1,5 +1,7 @@
 import { Request, Response, NextFunction } from "express";
-import Joi from "joi";
+import Joi, { ObjectSchema } from "joi";
+import Logging from "../library/Logging";
+import { IUser } from "../models/user/user";
 
 export const checkPassword = (
   req: Request,
@@ -17,4 +19,27 @@ export const checkPassword = (
   } else {
     next();
   }
+};
+
+export const validationSchema = (schema: ObjectSchema) => {
+  return async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      await schema.validateAsync(req.body);
+      next();
+    } catch (error) {
+      Logging.error(error);
+      return res.status(400).json({});
+    }
+  };
+};
+
+export const Schemas = {
+  user: {
+    create: Joi.object<IUser>({
+      fullname: Joi.string().required(),
+    }),
+    update: Joi.object<IUser>({
+      password: Joi.string().required(),
+    }),
+  },
 };

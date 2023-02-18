@@ -12,7 +12,11 @@ import {
 } from "../controllers/userController";
 import { apiAuth } from "../middleware/apiAuth..middleware";
 import { authMiddleware } from "../middleware/auth.middleware";
-import { checkPassword } from "../middleware/validation.middleware";
+import {
+  checkPassword,
+  Schemas,
+  validationSchema,
+} from "../middleware/validation.middleware";
 const router = express.Router();
 
 // Auth

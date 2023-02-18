@@ -86,7 +86,6 @@ userSchema.method("logout", async function logout() {
       return token.token !== user.access_token;
     });
 
-    console.log("asd", tokens);
     user.tokens = tokens;
     user.save();
   } catch (e) {

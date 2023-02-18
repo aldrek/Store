@@ -1,17 +1,32 @@
 import { Request, Response } from "express";
+import { Product } from "../models/product/product";
 
+// -------------------------------------------------------------------------------------------
+// Main goal: User should be able to add product
+// -------------------------------------------------------------------------------------------
 export const addProduct = async (req: Request, res: Response) => {
-  res.send("addProduct");
+  const product = new Product(req.body);
+
+  // validation for product
+
+  // save product
+  await product.save();
+
+  res.status(200).send({ data: product });
 };
+
 export const deleteProduct = async (req: Request, res: Response) => {
   res.send("deleteProduct");
 };
+
 export const listProduct = async (req: Request, res: Response) => {
   res.send("listProduct");
 };
+
 export const editProduct = async (req: Request, res: Response) => {
   res.send("editProduct");
 };
+
 export const addProductItem = async (req: Request, res: Response) => {
   res.send("addProductItem");
 };

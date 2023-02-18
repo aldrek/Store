@@ -8,8 +8,8 @@ export enum productCategory {
 }
 
 export enum productStatus {
-  avaiable = "IN stock",
-  not_avaiable = "Out of stock",
+  avaiable = "avaiable",
+  not_avaiable = "not_avaiable",
 }
 
 export enum productColor {

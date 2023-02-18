@@ -4,6 +4,7 @@ import { responseWithMessage } from "../util/responseUtil";
 import * as dotenv from "dotenv";
 import { deleteType } from "../util/userUtil";
 import { Request, Response } from "express";
+import { ApiError } from "../error/ApiError";
 
 // -------------------------------------------------------------------------------------------
 // Main goal: Signup User with email and passwordh
@@ -14,7 +15,7 @@ export const signupUser = async (req: Request, res: Response) => {
 
     const isEmailExist = await User.findOne({ email: user.email });
 
-    if (isEmailExist) res.status(400).send({ error: "User already exist" });
+    if (isEmailExist) res.status(400).send({ error: req.t("email_inuse") });
     else {
       await user.hashPassword(user.password);
 
@@ -62,13 +63,18 @@ export const signinUser = async (req: Request, res: Response) => {
           await user.generateAuthToken();
           res.status(200).send({ data: user });
         } else {
-          res.status(400).send({ error: "Wrong password" });
+          throw new ApiError(401, req.t("wrong-password")); // <- fake error
         }
       }
     }
-  } catch (e) {
-    console.log(e);
-    res.status(400).send({ error: e });
+  } catch (err: any) {
+    console.log(err);
+
+    if (err instanceof ApiError) {
+      res.status(401).send({ error: err.message });
+    }
+
+    // throw new ApiError(401, e.message);
   }
 };
 

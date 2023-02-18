@@ -12,14 +12,15 @@ import {
   listProductItem,
   listWishlistItem,
 } from "../controllers/productController";
+import { authMiddleware } from "../middleware/auth.middleware";
 
 const router = express.Router();
 
 // Product
-router.post("/product/add", addProduct);
-router.post("/product/delete", deleteProduct);
-router.get("/product/list", listProduct);
-router.put("/product/edit", editProduct);
+router.post("/add", authMiddleware, addProduct);
+router.post("/delete", deleteProduct);
+router.get("/list", listProduct);
+router.put("/edit", editProduct);
 
 // Product item
 router.post("/productItem/add", addProductItem);
