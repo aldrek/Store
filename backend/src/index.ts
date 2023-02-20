@@ -1,24 +1,17 @@
 import express from "express";
 import { connection } from "./config/db";
 import { userRouter } from "./routers/user.router";
-import dotenv from "dotenv";
-import { User } from "./models/user/user";
-import { UserSettings } from "./models/user/userSettings";
-import { Product } from "./models/product/product";
-import {
-  orderStatus,
-  productCategory,
-  productColor,
-  productSize,
-  productStatus,
-} from "./models/types";
-import { ProductItem } from "./models/product/productItem";
-import { Order } from "./models/order/order";
-
-import { OrderItem } from "./models/order/orderItem";
 import { orderRouter } from "./routers/order.router";
 import { productRouter } from "./routers/products.router";
-dotenv.config();
+
+import i18next from "i18next";
+import Backend from "i18next-fs-backend";
+import middleware from "i18next-http-middleware";
+
+import dotenv from "dotenv";
+dotenv.config({
+  path: `./config/.env.${process.env.NODE_ENV || "dev"}`,
+});
 
 const app = express();
 
@@ -27,6 +20,18 @@ app.use(express.json());
 
 // parse requests of content-type - application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
+
+i18next
+  .use(Backend)
+  .use(middleware.LanguageDetector)
+  .init({
+    fallbackLng: "en",
+    backend: {
+      loadPath: "./locales/{{lng}}/translation.json",
+    },
+  });
+
+app.use(middleware.handle(i18next));
 
 app.use("/api/user", userRouter);
 app.use("/api/order", orderRouter);

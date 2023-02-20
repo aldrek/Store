@@ -45,3 +45,12 @@ interface IProduct {
 const Product = model<IProduct>("product", productSchema);
 
 export { Product };
+
+productSchema.set("toJSON", {
+  transform: (doc, ret) => {
+    ret.id = ret._id;
+    delete ret._id;
+    delete ret.id;
+    delete ret.__v;
+  },
+});
